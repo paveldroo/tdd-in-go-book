@@ -1,6 +1,10 @@
-package calculator
+package main
 
 import "fmt"
+
+type Adder interface {
+	Add(x, y float64) float64
+}
 
 type Engine struct{}
 
@@ -13,13 +17,13 @@ func (e Engine) Add(x, y float64) float64 {
 }
 
 type Calculator struct {
-	engine *Engine
+	Adder Adder
 }
 
-func NewCalculator(e *Engine) *Calculator {
-	return &Calculator{engine: e}
+func NewCalculator(a Adder) *Calculator {
+	return &Calculator{Adder: a}
 }
 
 func (c Calculator) PrintAdd(x, y float64) {
-	fmt.Println("Result:", c.engine.Add(x, y))
+	fmt.Println("Result:", c.Adder.Add(x, y))
 }
