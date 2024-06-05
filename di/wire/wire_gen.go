@@ -8,17 +8,16 @@ package main
 
 import (
 	"github.com/google/wire"
-	"github.com/paveldroo/tdd-in-go-book/calculator"
 )
 
 // Injectors from wire.go:
 
-func InitCalc() *calculator.Calculator {
-	engine := calculator.NewEngine()
-	calculatorCalculator := calculator.NewCalculator(engine)
-	return calculatorCalculator
+func InitCalc() *Calculator {
+	engine := NewEngine()
+	calculator := NewCalculator(engine)
+	return calculator
 }
 
 // wire.go:
 
-var Set = wire.NewSet(calculator.NewEngine, wire.Bind(new(calculator.Adder), new(*calculator.Engine)), calculator.NewCalculator)
+var Set = wire.NewSet(NewEngine, wire.Bind(new(Adder), new(*Engine)), NewCalculator)

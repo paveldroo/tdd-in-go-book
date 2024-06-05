@@ -2,6 +2,12 @@ package calculator
 
 import "fmt"
 
+type Operation struct {
+	Expression string
+	Operator   string
+	Operands   []float64
+}
+
 type Engine struct{}
 
 func NewEngine() *Engine {
