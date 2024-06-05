@@ -17,27 +17,28 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
-func (e *Engine) ProcessOperation(op *Operation) (*string, error) {
+func (e *Engine) ProcessOperation(op *Operation) (string, error) {
+	opResStr := ""
 	switch {
 	case op.Operator == "+":
-		res := e.Add(op.Operands[0], op.Operands[1])
-		resStr := strconv.FormatFloat(res, 'f', 6, 64)
-		return &resStr, nil
+		opRes := e.Add(op.Operands[0], op.Operands[1])
+		opResStr = strconv.FormatFloat(opRes, 'f', 6, 64)
 	case op.Operator == "-":
 		res := e.Add(op.Operands[0], op.Operands[1])
-		resStr := strconv.FormatFloat(res, 'f', 6, 64)
-		return &resStr, nil
+		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	case op.Operator == "*":
 		res := e.Add(op.Operands[0], op.Operands[1])
-		resStr := strconv.FormatFloat(res, 'f', 6, 64)
-		return &resStr, nil
+		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	case op.Operator == "/":
 		res := e.Add(op.Operands[0], op.Operands[1])
-		resStr := strconv.FormatFloat(res, 'f', 6, 64)
-		return &resStr, nil
+		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
+	default:
+		return "", fmt.Errorf("unknown operator in expr %v", op.Expression)
 	}
 
-	return nil, fmt.Errorf("unknown operator in expr %v", op.Expression)
+	resStr := fmt.Sprintf("%v %v %v = %v", op.Operands[0], op.Operator, op.Operands[1], opResStr)
+
+	return resStr, nil
 }
 
 func (e *Engine) Add(x, y float64) float64 {

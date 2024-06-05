@@ -26,7 +26,7 @@ func TestParser_ProcessExpression(t *testing.T) {
 			Expression: expr,
 			Operator:   operator,
 			Operands:   operands,
-		}).Return(expectedResult).Once()
+		}).Return(expectedResult, nil).Once()
 
 		// Act
 		result, err := parser.ProcessExpression(expr)

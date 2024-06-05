@@ -9,7 +9,7 @@ import (
 )
 
 type OperationProcessor interface {
-	ProcessOperation(operation *calculator.Operation) (*string, error)
+	ProcessOperation(operation *calculator.Operation) (string, error)
 }
 
 type ValidationHelper interface {
@@ -28,10 +28,14 @@ func NewParser(e OperationProcessor, v ValidationHelper) *Parser {
 	}
 }
 
-func (p *Parser) ProcessExpression(expr string) (*string, error) {
+func (p *Parser) ProcessExpression(expr string) (string, error) {
 	op, err := p.getOperation(expr)
 	if err != nil {
-		return nil, format.Error(expr, err)
+		return "", format.Error(expr, err)
+	}
+	err = p.validator.CheckInput(op.Operator, op.Operands)
+	if err != nil {
+		return "", format.Error(expr, err)
 	}
 	return p.engine.ProcessOperation(op)
 }
@@ -63,7 +67,7 @@ func (p *Parser) getOperation(expr string) (*calculator.Operation, error) {
 	if err != nil {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
-	so, err := strconv.ParseFloat(strings.TrimSpace(splits[0]), 64)
+	so, err := strconv.ParseFloat(strings.TrimSpace(splits[1]), 64)
 	if err != nil {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
