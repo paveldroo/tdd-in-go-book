@@ -1,6 +1,9 @@
 package calculator
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type Operation struct {
 	Expression string
@@ -14,7 +17,30 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
-func (e Engine) Add(x, y float64) float64 {
+func (e *Engine) ProcessOperation(op *Operation) (*string, error) {
+	switch {
+	case op.Operator == "+":
+		res := e.Add(op.Operands[0], op.Operands[1])
+		resStr := strconv.FormatFloat(res, 'f', 6, 64)
+		return &resStr, nil
+	case op.Operator == "-":
+		res := e.Add(op.Operands[0], op.Operands[1])
+		resStr := strconv.FormatFloat(res, 'f', 6, 64)
+		return &resStr, nil
+	case op.Operator == "*":
+		res := e.Add(op.Operands[0], op.Operands[1])
+		resStr := strconv.FormatFloat(res, 'f', 6, 64)
+		return &resStr, nil
+	case op.Operator == "/":
+		res := e.Add(op.Operands[0], op.Operands[1])
+		resStr := strconv.FormatFloat(res, 'f', 6, 64)
+		return &resStr, nil
+	}
+
+	return nil, fmt.Errorf("unknown operator in expr %v", op.Expression)
+}
+
+func (e *Engine) Add(x, y float64) float64 {
 	return x + y
 }
 

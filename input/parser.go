@@ -1,8 +1,11 @@
 package input
 
 import (
+	"fmt"
 	"github.com/paveldroo/tdd-in-go-book/calculator"
 	"github.com/paveldroo/tdd-in-go-book/format"
+	"strconv"
+	"strings"
 )
 
 type OperationProcessor interface {
@@ -34,5 +37,37 @@ func (p *Parser) ProcessExpression(expr string) (*string, error) {
 }
 
 func (p *Parser) getOperation(expr string) (*calculator.Operation, error) {
-	return nil, nil
+	op := calculator.Operation{Expression: expr}
+
+	operator := ""
+	switch {
+	case strings.Contains(expr, "+"):
+		operator = "+"
+	case strings.Contains(expr, "-"):
+		operator = "-"
+	case strings.Contains(expr, "*"):
+		operator = "*"
+	case strings.Contains(expr, "/"):
+		operator = "/"
+	default:
+		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	}
+
+	op.Operator = operator
+
+	splits := strings.Split(expr, operator)
+	if len(splits) != 2 {
+		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	}
+	fo, err := strconv.ParseFloat(strings.TrimSpace(splits[0]), 64)
+	if err != nil {
+		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	}
+	so, err := strconv.ParseFloat(strings.TrimSpace(splits[0]), 64)
+	if err != nil {
+		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	}
+	op.Operands = []float64{fo, so}
+
+	return &op, nil
 }
