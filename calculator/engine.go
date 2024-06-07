@@ -24,13 +24,13 @@ func (e *Engine) ProcessOperation(op *Operation) (string, error) {
 		opRes := e.Add(op.Operands[0], op.Operands[1])
 		opResStr = strconv.FormatFloat(opRes, 'f', 6, 64)
 	case op.Operator == "-":
-		res := e.Add(op.Operands[0], op.Operands[1])
+		res := e.Subtract(op.Operands[0], op.Operands[1])
 		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	case op.Operator == "*":
-		res := e.Add(op.Operands[0], op.Operands[1])
+		res := e.Multiply(op.Operands[0], op.Operands[1])
 		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	case op.Operator == "/":
-		res := e.Add(op.Operands[0], op.Operands[1])
+		res := e.Divide(op.Operands[0], op.Operands[1])
 		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	default:
 		return "", fmt.Errorf("unknown operator in expr %v", op.Expression)
@@ -43,6 +43,18 @@ func (e *Engine) ProcessOperation(op *Operation) (string, error) {
 
 func (e *Engine) Add(x, y float64) float64 {
 	return x + y
+}
+
+func (e *Engine) Subtract(x, y float64) float64 {
+	return x - y
+}
+
+func (e *Engine) Multiply(x, y float64) float64 {
+	return x * y
+}
+
+func (e *Engine) Divide(x, y float64) float64 {
+	return x / y
 }
 
 type Calculator struct {

@@ -55,7 +55,7 @@ func TestParser_ProcessExpression(t *testing.T) {
 
 		// Assert
 		require.NotNil(t, err)
-		require.Nil(t, result)
+		assert.Equal(t, "", result)
 		assert.Contains(t, err.Error(), expr)
 		assert.Contains(t, err.Error(), expectedErrMsg)
 		validator.AssertExpectations(t)

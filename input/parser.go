@@ -33,45 +33,35 @@ func (p *Parser) ProcessExpression(expr string) (string, error) {
 	if err != nil {
 		return "", format.Error(expr, err)
 	}
-	err = p.validator.CheckInput(op.Operator, op.Operands)
-	if err != nil {
-		return "", format.Error(expr, err)
-	}
 	return p.engine.ProcessOperation(op)
 }
 
 func (p *Parser) getOperation(expr string) (*calculator.Operation, error) {
 	op := calculator.Operation{Expression: expr}
 
-	operator := ""
-	switch {
-	case strings.Contains(expr, "+"):
-		operator = "+"
-	case strings.Contains(expr, "-"):
-		operator = "-"
-	case strings.Contains(expr, "*"):
-		operator = "*"
-	case strings.Contains(expr, "/"):
-		operator = "/"
-	default:
+	fields := strings.Fields(expr)
+
+	if len(fields) != 3 {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
 
-	op.Operator = operator
+	operand, err := strconv.ParseFloat(fields[0], 64)
+	if err != nil {
+		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	}
+	op.Operands = append(op.Operands, operand)
 
-	splits := strings.Split(expr, operator)
-	if len(splits) != 2 {
-		return nil, fmt.Errorf("got invalid expression: %v", expr)
-	}
-	fo, err := strconv.ParseFloat(strings.TrimSpace(splits[0]), 64)
+	operand, err = strconv.ParseFloat(fields[2], 64)
 	if err != nil {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
-	so, err := strconv.ParseFloat(strings.TrimSpace(splits[1]), 64)
-	if err != nil {
-		return nil, fmt.Errorf("got invalid expression: %v", expr)
+	op.Operands = append(op.Operands, operand)
+
+	op.Operator = fields[1]
+
+	if err = p.validator.CheckInput(op.Operator, op.Operands); err != nil {
+		return nil, err
 	}
-	op.Operands = []float64{fo, so}
 
 	return &op, nil
 }
