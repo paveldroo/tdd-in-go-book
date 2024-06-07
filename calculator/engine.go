@@ -17,7 +17,7 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
-func (e *Engine) ProcessOperation(op *Operation) (string, error) {
+func (e *Engine) ProcessOperation(op Operation) (*string, error) {
 	opResStr := ""
 	switch {
 	case op.Operator == "+":
@@ -33,12 +33,12 @@ func (e *Engine) ProcessOperation(op *Operation) (string, error) {
 		res := e.Divide(op.Operands[0], op.Operands[1])
 		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
 	default:
-		return "", fmt.Errorf("unknown operator in expr %v", op.Expression)
+		return nil, fmt.Errorf("unknown operator in expr %v", op.Expression)
 	}
 
 	resStr := fmt.Sprintf("%v %v %v = %v", op.Operands[0], op.Operator, op.Operands[1], opResStr)
 
-	return resStr, nil
+	return &resStr, nil
 }
 
 func (e *Engine) Add(x, y float64) float64 {

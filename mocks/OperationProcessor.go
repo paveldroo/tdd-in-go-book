@@ -14,25 +14,27 @@ type OperationProcessor struct {
 }
 
 // ProcessOperation provides a mock function with given fields: operation
-func (_m *OperationProcessor) ProcessOperation(operation *calculator.Operation) (string, error) {
+func (_m *OperationProcessor) ProcessOperation(operation calculator.Operation) (*string, error) {
 	ret := _m.Called(operation)
 
 	if len(ret) == 0 {
 		panic("no return value specified for ProcessOperation")
 	}
 
-	var r0 string
+	var r0 *string
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*calculator.Operation) (string, error)); ok {
+	if rf, ok := ret.Get(0).(func(calculator.Operation) (*string, error)); ok {
 		return rf(operation)
 	}
-	if rf, ok := ret.Get(0).(func(*calculator.Operation) string); ok {
+	if rf, ok := ret.Get(0).(func(calculator.Operation) *string); ok {
 		r0 = rf(operation)
 	} else {
-		r0 = ret.Get(0).(string)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*string)
+		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*calculator.Operation) error); ok {
+	if rf, ok := ret.Get(1).(func(calculator.Operation) error); ok {
 		r1 = rf(operation)
 	} else {
 		r1 = ret.Error(1)

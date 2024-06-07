@@ -9,7 +9,7 @@ import (
 )
 
 type OperationProcessor interface {
-	ProcessOperation(operation *calculator.Operation) (string, error)
+	ProcessOperation(operation calculator.Operation) (*string, error)
 }
 
 type ValidationHelper interface {
@@ -28,40 +28,40 @@ func NewParser(e OperationProcessor, v ValidationHelper) *Parser {
 	}
 }
 
-func (p *Parser) ProcessExpression(expr string) (string, error) {
+func (p *Parser) ProcessExpression(expr string) (*string, error) {
 	op, err := p.getOperation(expr)
 	if err != nil {
-		return "", format.Error(expr, err)
+		return nil, format.Error(expr, err)
 	}
-	return p.engine.ProcessOperation(op)
+	return p.engine.ProcessOperation(*op)
 }
 
 func (p *Parser) getOperation(expr string) (*calculator.Operation, error) {
-	op := calculator.Operation{Expression: expr}
+	ops := strings.Fields(expr)
 
-	fields := strings.Fields(expr)
-
-	if len(fields) != 3 {
+	if len(ops) != 3 {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
 
-	operand, err := strconv.ParseFloat(fields[0], 64)
+	leftOp, err := strconv.ParseFloat(ops[0], 64)
 	if err != nil {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
-	op.Operands = append(op.Operands, operand)
 
-	operand, err = strconv.ParseFloat(fields[2], 64)
+	rightOp, err := strconv.ParseFloat(ops[2], 64)
 	if err != nil {
 		return nil, fmt.Errorf("got invalid expression: %v", expr)
 	}
-	op.Operands = append(op.Operands, operand)
 
-	op.Operator = fields[1]
-
-	if err = p.validator.CheckInput(op.Operator, op.Operands); err != nil {
+	operator := ops[1]
+	operands := []float64{leftOp, rightOp}
+	if err = p.validator.CheckInput(operator, operands); err != nil {
 		return nil, err
 	}
 
-	return &op, nil
+	return &calculator.Operation{
+		Expression: expr,
+		Operator:   operator,
+		Operands:   operands,
+	}, nil
 }

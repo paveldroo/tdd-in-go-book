@@ -22,20 +22,20 @@ func TestParser_ProcessExpression(t *testing.T) {
 		parser := input.NewParser(engine, validator)
 
 		validator.On("CheckInput", operator, operands).Return(nil).Once()
-		engine.On("ProcessOperation", &calculator.Operation{
+		engine.On("ProcessOperation", calculator.Operation{
 			Expression: expr,
 			Operator:   operator,
 			Operands:   operands,
-		}).Return(expectedResult, nil).Once()
+		}).Return(&expectedResult, nil).Once()
 
 		// Act
 		result, err := parser.ProcessExpression(expr)
 
 		// Assert
 		require.Nil(t, err)
-		assert.Equal(t, expectedResult, result)
-
-		// Other assertions
+		require.NotNil(t, result)
+		assert.Contains(t, *result, expectedResult)
+		assert.Contains(t, *result, expr)
 		validator.AssertExpectations(t)
 		engine.AssertExpectations(t)
 	})
@@ -55,7 +55,7 @@ func TestParser_ProcessExpression(t *testing.T) {
 
 		// Assert
 		require.NotNil(t, err)
-		assert.Equal(t, "", result)
+		require.Nil(t, result)
 		assert.Contains(t, err.Error(), expr)
 		assert.Contains(t, err.Error(), expectedErrMsg)
 		validator.AssertExpectations(t)
