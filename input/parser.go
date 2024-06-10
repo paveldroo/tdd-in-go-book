@@ -40,17 +40,17 @@ func (p *Parser) getOperation(expr string) (*calculator.Operation, error) {
 	ops := strings.Fields(expr)
 
 	if len(ops) != 3 {
-		return nil, fmt.Errorf("got invalid expression: %v", expr)
+		return nil, fmt.Errorf("invalid expression length: %v", expr)
 	}
 
 	leftOp, err := strconv.ParseFloat(ops[0], 64)
 	if err != nil {
-		return nil, fmt.Errorf("got invalid expression: %v", expr)
+		return nil, fmt.Errorf("invalid left operand: %v", ops[0])
 	}
 
 	rightOp, err := strconv.ParseFloat(ops[2], 64)
 	if err != nil {
-		return nil, fmt.Errorf("got invalid expression: %v", expr)
+		return nil, fmt.Errorf("invalid right operand: %v", ops[2])
 	}
 
 	operator := ops[1]

@@ -60,4 +60,58 @@ func TestParser_ProcessExpression(t *testing.T) {
 		assert.Contains(t, err.Error(), expectedErrMsg)
 		validator.AssertExpectations(t)
 	})
+	t.Run("invalid left operand", func(t *testing.T) {
+		// Arrange
+		expr := "abc * 3"
+		expectedErrMsg := "invalid left operand"
+		engine := mocks.NewOperationProcessor(t)
+		validator := mocks.NewValidationHelper(t)
+		parser := input.NewParser(engine, validator)
+
+		// Act
+		result, err := parser.ProcessExpression(expr)
+
+		// Assert
+		require.Nil(t, result)
+		require.NotNil(t, err)
+		assert.Contains(t, err.Error(), expr)
+		assert.Contains(t, err.Error(), expectedErrMsg)
+		validator.AssertExpectations(t)
+	})
+	t.Run("invalid right operand", func(t *testing.T) {
+		// Arrange
+		expr := "3 + abc"
+		expectedErrMsg := "invalid right operand"
+		engine := mocks.NewOperationProcessor(t)
+		validator := mocks.NewValidationHelper(t)
+		parser := input.NewParser(engine, validator)
+
+		// Act
+		result, err := parser.ProcessExpression(expr)
+
+		// Assert
+		require.Nil(t, result)
+		require.NotNil(t, err)
+		assert.Contains(t, err.Error(), expr)
+		assert.Contains(t, err.Error(), expectedErrMsg)
+		validator.AssertExpectations(t)
+	})
+	t.Run("invalid expression length", func(t *testing.T) {
+		// Arrange
+		expr := "3 +"
+		expectedErrMsg := "invalid expression length"
+		engine := mocks.NewOperationProcessor(t)
+		validator := mocks.NewValidationHelper(t)
+		parser := input.NewParser(engine, validator)
+
+		// Act
+		result, err := parser.ProcessExpression(expr)
+
+		// Assert
+		require.Nil(t, result)
+		require.NotNil(t, err)
+		assert.Contains(t, err.Error(), expr)
+		assert.Contains(t, err.Error(), expectedErrMsg)
+		validator.AssertExpectations(t)
+	})
 }
