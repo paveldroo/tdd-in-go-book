@@ -2,7 +2,7 @@ package calculator
 
 import (
 	"fmt"
-	"strconv"
+	"github.com/paveldroo/tdd-in-go-book/format"
 )
 
 type Operation struct {
@@ -18,25 +18,21 @@ func NewEngine() *Engine {
 }
 
 func (e *Engine) ProcessOperation(op Operation) (*string, error) {
-	opResStr := ""
+	var res float64
 	switch {
 	case op.Operator == "+":
-		opRes := e.Add(op.Operands[0], op.Operands[1])
-		opResStr = strconv.FormatFloat(opRes, 'f', 6, 64)
+		res = e.Add(op.Operands[0], op.Operands[1])
 	case op.Operator == "-":
-		res := e.Subtract(op.Operands[0], op.Operands[1])
-		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
+		res = e.Subtract(op.Operands[0], op.Operands[1])
 	case op.Operator == "*":
-		res := e.Multiply(op.Operands[0], op.Operands[1])
-		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
+		res = e.Multiply(op.Operands[0], op.Operands[1])
 	case op.Operator == "/":
-		res := e.Divide(op.Operands[0], op.Operands[1])
-		opResStr = strconv.FormatFloat(res, 'f', 6, 64)
+		res = e.Divide(op.Operands[0], op.Operands[1])
 	default:
 		return nil, fmt.Errorf("unknown operator in expr %v", op.Expression)
 	}
 
-	resStr := fmt.Sprintf("%v %v %v = %v", op.Operands[0], op.Operator, op.Operands[1], opResStr)
+	resStr := format.Result(op.Expression, res)
 
 	return &resStr, nil
 }
