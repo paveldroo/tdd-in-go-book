@@ -1,7 +1,7 @@
 package calculator_test
 
 import (
-	"github.com/paveldroo/tdd-in-go-book/calculator"
+	"github.com/paveldroo/tdd-in-go-book/calculator/calculator"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

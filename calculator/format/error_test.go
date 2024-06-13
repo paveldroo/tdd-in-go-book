@@ -2,7 +2,7 @@ package format_test
 
 import (
 	"fmt"
-	"github.com/paveldroo/tdd-in-go-book/format"
+	"github.com/paveldroo/tdd-in-go-book/calculator/format"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

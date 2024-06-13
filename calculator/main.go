@@ -1,6 +1,8 @@
 package main
 
-import "github.com/paveldroo/tdd-in-go-book/calculator"
+import (
+	"github.com/paveldroo/tdd-in-go-book/calculator/calculator"
+)
 
 func main() {
 	e := calculator.NewEngine()

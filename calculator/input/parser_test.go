@@ -2,9 +2,9 @@ package input_test
 
 import (
 	"fmt"
-	"github.com/paveldroo/tdd-in-go-book/calculator"
-	"github.com/paveldroo/tdd-in-go-book/input"
-	"github.com/paveldroo/tdd-in-go-book/mocks"
+	"github.com/paveldroo/tdd-in-go-book/calculator/calculator"
+	"github.com/paveldroo/tdd-in-go-book/calculator/input"
+	"github.com/paveldroo/tdd-in-go-book/calculator/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

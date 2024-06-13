@@ -1,7 +1,7 @@
 package input_test
 
 import (
-	"github.com/paveldroo/tdd-in-go-book/input"
+	"github.com/paveldroo/tdd-in-go-book/calculator/input"
 	"testing"
 )
 
