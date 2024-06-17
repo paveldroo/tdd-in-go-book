@@ -25,8 +25,10 @@ func TestDivide(t *testing.T) {
 		"min x, min y":   {x: -128, y: -128, want: "1.00"},
 	}
 
-	for name, tc := range tests {
+	for name, rtc := range tests {
+		tc := rtc
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			x, y := int8(tc.x), int8(tc.y)
 			r, err := table_driven.Divide(x, y)
 			if tc.wantErr != nil {
