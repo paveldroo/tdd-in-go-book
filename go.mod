@@ -3,7 +3,9 @@ module github.com/paveldroo/tdd-in-go-book
 go 1.21.9
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
+	github.com/gorilla/mux v1.8.1
 	github.com/stretchr/testify v1.9.0
 )
 
