@@ -9,10 +9,14 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
 func TestIndexIntegration(t *testing.T) {
+	if os.Getenv("LONG") == "" {
+		t.Skip("Skipping TestIndexIntegration in short mode")
+	}
 	// Arrange
 	b := db.Book{
 		ID:      "123",
