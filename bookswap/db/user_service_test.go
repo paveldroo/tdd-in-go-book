@@ -3,9 +3,9 @@ package db_test
 import (
 	"testing"
 
-	"github.com/PacktPublishing/Test-Driven-Development-in-Go/chapter06/db"
-	"github.com/PacktPublishing/Test-Driven-Development-in-Go/chapter06/mocks"
 	"github.com/google/uuid"
+	"github.com/paveldroo/tdd-in-go-book/bookswap/db"
+	"github.com/paveldroo/tdd-in-go-book/bookswap/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

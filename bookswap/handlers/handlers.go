@@ -6,8 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/PacktPublishing/Test-Driven-Development-in-Go/chapter06/db"
 	"github.com/gorilla/mux"
+	"github.com/paveldroo/tdd-in-go-book/bookswap/db"
 )
 
 // Handler contains the handler and all its dependencies.

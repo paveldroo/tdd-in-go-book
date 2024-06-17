@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	db "github.com/PacktPublishing/Test-Driven-Development-in-Go/chapter06/db"
+	db "github.com/paveldroo/tdd-in-go-book/bookswap/db"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -3,8 +3,8 @@ package db_test
 import (
 	"testing"
 
-	"github.com/PacktPublishing/Test-Driven-Development-in-Go/chapter06/db"
 	"github.com/google/uuid"
+	"github.com/paveldroo/tdd-in-go-book/bookswap/db"
 	"github.com/stretchr/testify/assert"
 )
 
